@@ -1,0 +1,784 @@
+<!-- Copyright KGM, 2023-2024 -->
+<!-- update 0.3.1-tnd -> 0.3.1T, date: 07.01.2024, info: idk, sorry -->
+<!-- 01.01.2024. с новым годом! :) продолжаю работать над проектом, несмотря на праздники -->
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Эквивалентные схемы</title>
+    <link rel="stylesheet" href="styles/main.css">
+    <link rel="shortcut icon" href="images/icon.ico" type="image/x-icon">
+    <link rel="icon" href="images/icon.png">
+    <script>
+        /* быстрая писанина функций, которым не было места в основном файле */
+
+        const l = (text) => {
+            console.log(text);
+        }
+
+        const clearInput = (id) => {
+            document.getElementById(id).value = ('');
+
+            supportCheckAll();
+        }
+    </script>
+    <script src="scripts/main.js"></script>
+</head>
+
+<body>
+    <div id="startWindow">
+        <!-- <div class="btn-holder" style=" width: 100%;
+                                        overflow: hidden;
+                                        flex: none;
+                                        justify-content: flex-end;
+                                        display: flex;">
+            <button id="helpButton" title="Помощь" onclick="alert(true)">?</button>
+        </div> -->
+        <h1 id="title0">Эквивалентные схемы</h1>
+        <p>
+            Чтобы приступить к заполнению
+            <br>данных нажмите на кнопку ниже:
+        </p>
+        <p>
+            <button class="startButton" onclick="step0()" title="Нажмите, чтобы начать заполнение данных">Начать</button>
+            <!-- <button onclick="speedRun(); console.info('speedrun n/w')">speedrun</button> -->
+        </p>
+        <br>
+        <br>
+        <!-- <details style="text-align: left;">
+            <summary>Пример готового результата:</summary>
+            <p>
+            <table>
+                <tr style="text-align: center">
+                    <th>R</th>
+                    <th>R, Ом</th>
+                    <th>I, А</th>
+                    <th>U, В</th>
+                </tr>
+                <tr>
+                    <td>R<sub>1</sub></td>
+                    <td>2.0</td>
+                    <td>3.0</td>
+                    <td>6.0</td>
+                </tr>
+                <tr>
+                    <td>R<sub>2</sub></td>
+                    <td>4.0</td>
+                    <td>3.0</td>
+                    <td>12.0</td>
+                </tr>
+                <tr>
+                    <td>R<sub>3</sub></td>
+                    <td>6.0</td>
+                    <td>3.0</td>
+                    <td>18.0</td>
+                </tr>
+                <tr>
+                    <td>R&#8242;</td>
+                    <td>6.0</td>
+                    <td>3.0</td>
+                    <td>18.0</td>
+                </tr>
+                <tr>
+                    <td>R<sub>общ.</sub></td>
+                    <td>3.0</td>
+                    <td>6.0</td>
+                    <td>18.0</td>
+                </tr>
+            </table>
+            <a onclick="help(true)" href="#" style="text-align: center;"><p>Как получить такой же результат?</p></a>
+            </p>
+        </details> -->
+        <div class="info" style="text-align: center;" id="info0">
+            <input id="info_body_1" class="info_switch" type="checkbox" onclick="benaun(0)">
+            <label for="info_body_1" class="info_headline">Пример готового результата:</label>
+            <div class="info_body">
+                <p>
+                <table>
+                    <tr style="text-align: center">
+                        <th>R</th>
+                        <th>R, Ом</th>
+                        <th>I, А</th>
+                        <th>U, В</th>
+                    </tr>
+                    <tr>
+                        <td>R<sub>1</sub></td>
+                        <td>2.0</td>
+                        <td>3.0</td>
+                        <td>6.0</td>
+                    </tr>
+                    <tr>
+                        <td>R<sub>2</sub></td>
+                        <td>4.0</td>
+                        <td>3.0</td>
+                        <td>12.0</td>
+                    </tr>
+                    <tr>
+                        <td>R<sub>3</sub></td>
+                        <td>6.0</td>
+                        <td>3.0</td>
+                        <td>18.0</td>
+                    </tr>
+                    <tr>
+                        <td>R&#8242;</td>
+                        <td>6.0</td>
+                        <td>3.0</td>
+                        <td>18.0</td>
+                    </tr>
+                    <tr>
+                        <td>R<sub>общ.</sub></td>
+                        <td>3.0</td>
+                        <td>6.0</td>
+                        <td>18.0</td>
+                    </tr>
+                </table>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div id="result" style="align-items: normal;">
+        <h2>Результат:</h2>
+        <table>
+            <tr>
+                <th>R</th>
+                <th>R, Ом</th>
+                <th>I, А</th>
+                <th>U, В</th>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>1</sub></td>
+                <td id="r1R">1.0</td>
+                <td id="r1I">-</td>
+                <td id="r1U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>2</sub></td>
+                <td id="r2R">2.0</td>
+                <td id="r2I">-</td>
+                <td id="r2U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>3</sub></td>
+                <td id="r3R">3.0</td>
+                <td id="r3I">-</td>
+                <td id="r3U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>4</sub></td>
+                <td id="r4R">4.0</td>
+                <td id="r4I">-</td>
+                <td id="r4U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>5</sub></td>
+                <td id="r5R">5.0</td>
+                <td id="r5I">-</td>
+                <td id="r5U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>6</sub></td>
+                <td id="r6R">6.0</td>
+                <td id="r6I">-</td>
+                <td id="r6U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>7</sub></td>
+                <td id="r7R">7.0</td>
+                <td id="r7I">-</td>
+                <td id="r7U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>8</sub></td>
+                <td id="r8R">8.0</td>
+                <td id="r8I">-</td>
+                <td id="r8U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>9</sub></td>
+                <td id="r9R">9.0</td>
+                <td id="r9I">-</td>
+                <td id="r9U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>10</sub></td>
+                <td id="r10R">10.0</td>
+                <td id="r10I">-</td>
+                <td id="r10U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>11</sub></td>
+                <td id="r11R">11.0</td>
+                <td id="r11I">-</td>
+                <td id="r11U">-</td>
+            </tr>
+            <tr class="tableR">
+                <td>R<sub>12</sub></td>
+                <td id="r12R">12.0</td>
+                <td id="r12I">-</td>
+                <td id="r12U">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R&#8242;</td>
+                <td id="r1sR">-</td>
+                <td id="r1sI">-</td>
+                <td id="r1sU">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R&#8242;&#8242;</td>
+                <td id="r2sR">-</td>
+                <td id="r2sI">-</td>
+                <td id="r2sU">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R<sup>3</sup>&#8242;</td>
+                <td id="r3sR">-</td>
+                <td id="r3sI">-</td>
+                <td id="r3sU">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R<sup>4</sup>&#8242;</td>
+                <td id="r4sR">-</td>
+                <td id="r4sI">-</td>
+                <td id="r4sU">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R<sup>5</sup>&#8242;</td>
+                <td id="r5sR">-</td>
+                <td id="r5sI">-</td>
+                <td id="r5sU">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R<sup>6</sup>&#8242;</td>
+                <td id="r6sR">-</td>
+                <td id="r6sI">-</td>
+                <td id="r6sU">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R<sup>7</sup>&#8242;</td>
+                <td id="r7sR">-</td>
+                <td id="r7sI">-</td>
+                <td id="r7sU">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R<sup>8</sup>&#8242;</td>
+                <td id="r8sR">-</td>
+                <td id="r8sI">-</td>
+                <td id="r8sU">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R<sup>9</sup>&#8242;</td>
+                <td id="r9sR">-</td>
+                <td id="r9sI">-</td>
+                <td id="r9sU">-</td>
+            </tr>
+            <tr class="tableRs">
+                <td>R<sup>10</sup>&#8242;</td>
+                <td id="r10sR">-</td>
+                <td id="r10sI">-</td>
+                <td id="r10sU">-</td>
+            </tr>
+            <tr>
+                <td>R<sub>общ.</sub></td>
+                <td id="r0R">-</td>
+                <td id="r0I">-</td>
+                <td id="r0U">-</td>
+            </tr>
+        </table>
+        <!-- <div id="rangeOfOkr">
+				<details>
+					<summary>Округление</summary>
+					<input type="range" id="okrEl" min="0" max="16" step="1" value="1" oninput="console.log(this.value)">
+				</details>
+		</div> -->
+        <br>
+        <!-- <div class="btn-holder"> -->
+        <button class="startButton" onclick="step0()" id="startButton2" title="Нажмите, чтобы начать заполнение данных">Начать сначала</button>
+        <!-- </div> -->
+        <!-- <details style="flex: none;"> -->
+        <!--<summary >-->
+        <!-- <p id="textReshenie" onmouseenter="showResh(true)" onmouseleave="showResh(false)" onclick="ocResh()"> -->
+        <!-- </p></summary> -->
+        <div class="info" style="text-align: center;" id="info0">
+            <input id="info_body_2" class="info_switch" type="checkbox" onclick="benaun(1)">
+            <label for="info_body_2" class="info_headline">Подробно</label>
+            <div class="info_body">
+                <p id="reshenie" style="word-wrap: break-word;"></p>
+            </div>
+        </div>
+        <!-- </details> -->
+    </div>
+    <!-- <div id="inputInput" style="display: none;"> -->
+    <div id="inputR" style="display: none;">
+        <h4>Введите количество резисторов</h4>
+        <p>
+            Всего R (без R<sub>общ.</sub>):
+            <input type="number" id="sumR" oninput="test()" placeholder="2">
+            <button onclick="clearInput('sumR')" class="clearInput">&times;</button>
+        </p>
+        <p>
+            Всего R штрих:
+            <input type="number" id="sumRs" oninput="test()" placeholder="0">
+            <button onclick="clearInput('sumRs')" class="clearInput">&times;</button>
+        </p>
+        <div class="btn-holder">
+            <button onclick="step1()" class="btn">Далее</button>
+        </div>
+    </div>
+    <div id="inputRR" style="display: none;">
+        <h4>Введите значения R резисторов и U/I в цепи</h4>
+        <p class="RN">R<sub>1</sub> =
+            <input type="number" id="R1ininputrr" oninput="supportCheck(1)" placeholder="1" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R1ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R1ininputrr">KGM1</label>
+        </p>
+        <p class="RN">R<sub>2</sub> =
+            <input type="number" id="R2ininputrr" oninput="supportCheck(2)" placeholder="2" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R2ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R2ininputrr">KGM2</label>
+        </p>
+        <p class="RN">R<sub>3</sub> =
+            <input type="number" id="R3ininputrr" oninput="supportCheck(3)" placeholder="3" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R3ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R3ininputrr">KGM3</label>
+        </p>
+        <p class="RN">R<sub>4</sub> =
+            <input type="number" id="R4ininputrr" oninput="supportCheck(4)" placeholder="4" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R4ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R4ininputrr">KGM4</label>
+        </p>
+        <p class="RN">R<sub>5</sub> =
+            <input type="number" id="R5ininputrr" oninput="supportCheck(5)" placeholder="5" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R5ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R5ininputrr">KGM5</label>
+        </p>
+        <p class="RN">R<sub>6</sub> =
+            <input type="number" id="R6ininputrr" oninput="supportCheck(6)" placeholder="6" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R6ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R6ininputrr">KGM6</label>
+        </p>
+        <p class="RN">R<sub>7</sub> =
+            <input type="number" id="R7ininputrr" oninput="supportCheck(7)" placeholder="7" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R7ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R7ininputrr">KGM7</label>
+        </p>
+        <p class="RN">R<sub>8</sub> =
+            <input type="number" id="R8ininputrr" oninput="supportCheck(8)" placeholder="8" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R8ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R8ininputrr">KGM8</label>
+        </p>
+        <p class="RN">R<sub>9</sub> =
+            <input type="number" id="R9ininputrr" oninput="supportCheck(9)" placeholder="9" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R9ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R9ininputrr">KGM9</label>
+        </p>
+        <p class="RN">R<sub>10</sub> =
+            <input type="number" id="R10ininputrr" oninput="supportCheck(10)" placeholder="10" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R10ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R10ininputrr">KGM10</label>
+        </p>
+        <p class="RN">R<sub>11</sub> =
+            <input type="number" id="R11ininputrr" oninput="supportCheck(11)" placeholder="11" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R11ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR"for="R11ininputrr">KGM11</label>
+        </p>
+        <p class="RN">R<sub>12</sub> =
+            <input type="number" id="R12ininputrr" oninput="supportCheck(12)" placeholder="12" min="0" step="0.1"> Ом
+            <button onclick="clearInput('R12ininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportRR" for="R12ininputrr">KGM12</label>
+        </p>
+        <br>
+        <p>
+            <select onchange="changeInputUI()" style="width: 2.5em;" id="r0U_or_I">
+                <option value="0">U</option>
+                <option value="1">I</option>
+            </select><sub>общ.</sub> =
+            <input type="number" id="r0UIininputrr" oninput="supportCheckR0UI()" placeholder="5" min="0" step="0.1">
+            <text id="U_or_I">В</text>
+
+            <button onclick="clearInput('r0UIininputrr')" class="clearInput">&times;</button>
+            <br>
+            <label class="supportAboutError supportR0UI" for="r0UIininputrr">KGM0</label>
+        </p>
+        <div class="btn-holder">
+            <button class="btn" onclick="step2()">Далее</button>
+        </div>
+    </div>
+    <div id="inputR1AndRn" style="display: none; text-align: center;">
+        <h4>Выберите, из каких резисторов состоит каждый R штрих</h4>
+        <p style="font-style: italic; margin-top: 0;">Для выбора нескольких R зажмите Ctrl + нужные R.</p>
+        <!-- <p id="R1s" class="RNs"> -->
+        <details id="R1s" class="RNs" style="display: none;">
+            <summary>R&#8242;: <text id="R1stext"></text></summary>
+            <div class="container">
+                <select id="R1sS1" oninput="checkInput('R1sInp', 'R1s')" class="R1sInp" title="Из каёких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                </select>
+                <select id="R1sS" class="R1sInp" oninput="checkInput('R1sInp', 'R1s')" title="Как они соединены?">
+                    <option value="none" class="noneCls">-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p > -->
+        <details id="R2s" class="RNs" style="display: block;">
+            <summary>R&#8242;&#8242;: <text id="R2stext"></text></summary>
+            <div class="container">
+                <select id="R2sS1" class="R2sInp" oninput="checkInput('R2sInp', 'R2s')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                </select>
+                <select id="R2sS" class="R2sInp" oninput="checkInput('R2sInp', 'R2s')" title="Как они соединены?">
+                    <option value="none" class="noneCls" selected>-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p> -->
+        <details id="R3s" class="RNs" style="display: block;">
+            <summary>R<sup>3</sup>&#8242;: <text id="R3stext"></text></summary>
+            <div class="container">
+                <select id="R3sS1" class="R3sInp" oninput="checkInput('R3sInp', 'R3s')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                    <option value="R2s" class="R2sRInInput">R''</option>
+                </select>
+                <select id="R3sS" class="R3sInp" oninput="checkInput('R3sInp', 'R3s')" title="Как они соединены?">
+                    <option value="none" class="noneCls" selected>-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p > -->
+        <details id="R4s" class="RNs" style="display: block;">
+            <summary>R<sup>4</sup>&#8242;: <text id="R4stext"></text></summary>
+            <div class="container">
+                <select id="R4sS1" class="R4sInp" oninput="checkInput('R4sInp', 'R4s')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                    <option value="R2s" class="R2sRInInput">R''</option>
+                    <option value="R3s" class="R3sRInInput">R³'</option>
+                </select>
+                <select id="R4sS" class="R4sInp" oninput="checkInput('R4sInp', 'R4s')" title="Как они соединены?">
+                    <option value="none" class="noneCls" selected>-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p > -->
+        <details id="R5s" class="RNs" style="display: block;">
+            <summary>R<sup>5</sup>&#8242;: <text id="R5stext"></text></summary>
+            <div class="container">
+                <select id="R5sS1" class="R5sInp" oninput="checkInput('R5sInp', 'R5s')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                    <option value="R2s" class="R2sRInInput">R''</option>
+                    <option value="R3s" class="R3sRInInput">R³'</option>
+                    <option value="R4s" class="R4sRInInput">R⁴'</option>
+                </select>
+                <select id="R5sS" class="R5sInp" oninput="checkInput('R5sInp', 'R5s')" title="Как они соединены?">
+                    <option value="none" class="noneCls" selected>-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p > -->
+        <details id="R6s" class="RNs" style="display: block;">
+            <summary>R<sup>6</sup>&#8242;: <text id="R6stext"></text></summary>
+            <div class="container">
+                <select id="R6sS1" class="R6sInp" oninput="checkInput('R6sInp', 'R6s')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                    <option value="R2s" class="R2sRInInput">R''</option>
+                    <option value="R3s" class="R3sRInInput">R³'</option>
+                    <option value="R4s" class="R4sRInInput">R⁴'</option>
+                    <option value="R5s" class="R5sRInInput">R⁵'</option>
+                </select>
+                <select id="R6sS" class="R6sInp" oninput="checkInput('R6sInp', 'R6s')" title="Как они соединены?">
+                    <option value="none" class="noneCls">-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p > -->
+        <details id="R7s" class="RNs" style="display: block;">
+            <summary>R<sup>7</sup>&#8242;: <text id="R7stext"></text></summary>
+            <div class="container">
+                <select id="R7sS1" class="R7sInp" oninput="checkInput('R7sInp', 'R7s')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                    <option value="R2s" class="R2sRInInput">R''</option>
+                    <option value="R3s" class="R3sRInInput">R³'</option>
+                    <option value="R4s" class="R4sRInInput">R⁴'</option>
+                    <option value="R5s" class="R5sRInInput">R⁵'</option>
+                    <option value="R6s" class="R6sRInInput">R⁶'</option>
+                </select>
+                <select id="R7sS" class="R7sInp" oninput="checkInput('R7sInp', 'R7s')" title="Как они соединены?">
+                    <option value="none" class="noneCls">-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p > -->
+        <details id="R8s" class="RNs" style="display: block;">
+            <summary>R<sup>8</sup>&#8242;: <text id="R8stext"></text></summary>
+            <div class="container">
+                <select id="R8sS1" class="R8sInp" oninput="checkInput('R8sInp', 'R8s')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                    <option value="R2s" class="R2sRInInput">R''</option>
+                    <option value="R3s" class="R3sRInInput">R³'</option>
+                    <option value="R4s" class="R4sRInInput">R⁴'</option>
+                    <option value="R5s" class="R5sRInInput">R⁵'</option>
+                    <option value="R6s" class="R6sRInInput">R⁶'</option>
+                    <option value="R7s" class="R7sRInInput">R⁷'</option>
+                </select>
+                <select id="R8sS" class="R8sInp" oninput="checkInput('R8sInp', 'R8s')" title="Как они соединены?">
+                    <option value="none" class="noneCls">-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p > -->
+        <details id="R9s" class="RNs" style="display: block;">
+            <summary>R<sup>9</sup>&#8242;: <text id="R9stext"></text></summary>
+            <div class="container">
+                <select id="R9sS1" class="R9sInp" oninput="checkInput('R9sInp', 'R9s')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                    <option value="R2s" class="R2sRInInput">R''</option>
+                    <option value="R3s" class="R3sRInInput">R³'</option>
+                    <option value="R4s" class="R4sRInInput">R⁴'</option>
+                    <option value="R5s" class="R5sRInInput">R⁵'</option>
+                    <option value="R6s" class="R6sRInInput">R⁶'</option>
+                    <option value="R7s" class="R7sRInInput">R⁷'</option>
+                    <option value="R8s" class="R8sRInInput">R⁸'</option>
+                </select>
+                <select id="R9sS" class="R9sInp" oninput="checkInput('R9sInp', 'R9s')" title="Как они соединены?">
+                    <option value="none" class="noneCls">-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p > -->
+        <details id="R10s" class="RNs" style="display: block;">
+            <summary>R<sup>10</sup>&#8242;: <text id="R10stext"></text></summary>
+            <div class="container">
+                <select id="R10sS1" class="R10sInp" oninput="checkInput('R10sInp', 'R10s')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                    <option value="R2s" class="R2sRInInput">R''</option>
+                    <option value="R3s" class="R3sRInInput">R³'</option>
+                    <option value="R4s" class="R4sRInInput">R⁴'</option>
+                    <option value="R5s" class="R5sRInInput">R⁵'</option>
+                    <option value="R6s" class="R6sRInInput">R⁶'</option>
+                    <option value="R7s" class="R7sRInInput">R⁷'</option>
+                    <option value="R8s" class="R8sRInInput">R⁸'</option>
+                    <option value="R9s" class="R9sRInInput">R⁹'</option>
+                </select>
+                <select id="R10sS" class="R10sInp" oninput="checkInput('R10sInp', 'R10s')" title="Как они соединены?">
+                    <option value="none" class="noneCls">-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <p  style="display: none;"> -->
+        <details id="R0" class="R0" style="display: block;">
+            <summary>R<sub>общ.</sub>: <text id="R0text"></text></summary>
+            <div class="container">
+                <select id="R0S1" class="R0Inp" oninput="checkInput('R0Inp', 'R0')" title="Из каких R состоит?" multiple>
+                    <option value="R1" class="R1RInInput">R₁</option>
+                    <option value="R2" class="R2RInInput">R₂</option>
+                    <option value="R3" class="R3RInInput">R₃</option>
+                    <option value="R4" class="R4RInInput">R₄</option>
+                    <option value="R5" class="R5RInInput">R₅</option>
+                    <option value="R6" class="R6RInInput">R₆</option>
+                    <option value="R7" class="R7RInInput">R₇</option>
+                    <option value="R8" class="R8RInInput">R₈</option>
+                    <option value="R9" class="R9RInInput">R₉</option>
+                    <option value="R10" class="R10RInInput">R₁₀</option>
+                    <option value="R11" class="R11RInInput">R₁₁</option>
+                    <option value="R12" class="R12RInInput">R₁₂</option>
+                    <option value="R1s" class="R1sRInInput">R'</option>
+                    <option value="R2s" class="R2sRInInput">R''</option>
+                    <option value="R3s" class="R3sRInInput">R³'</option>
+                    <option value="R4s" class="R4sRInInput">R⁴'</option>
+                    <option value="R5s" class="R5sRInInput">R⁵'</option>
+                    <option value="R6s" class="R6sRInInput">R⁶'</option>
+                    <option value="R7s" class="R7sRInInput">R⁷'</option>
+                    <option value="R8s" class="R8sRInInput">R⁸'</option>
+                    <option value="R9s" class="R9sRInInput">R⁹'</option>
+                    <option value="R10s" class="R10sRInInput">R¹⁰'</option>
+                </select>
+                <select id="R0S" class="R0Inp" oninput="checkInput('R0Inp', 'R0')" title="Как они соединены?">
+                    <option value="none" class="noneCls">-</option>
+                    <option value="true">Параллельно</option>
+                    <option value="false">Последовательно</option>
+                </select>
+            </div>
+        </details>
+        <!-- </p> -->
+        <!-- <div class="btn-holder"> -->
+        <button onclick="submit()" id="submitButton" title="Rобщ. не задан" disabled>Завершить</button>
+        <!-- </div> -->
+    </div>
+    <!-- </div> -->
+    <!-- <span id="scriptsIsActive">
+        Script main.js не загружен.
+    </span> -->
+    <span id="version">
+        Версия: 0.3.4 (13).
+    </span>
+    <footer id="author">
+        &copy; Козлов Г. М., 2023
+    </footer>
+
+    <!-- ⁰¹²³⁴⁵⁶⁷⁸⁹ -->
+    <!-- ₀₁₂₃₄₅₆₇₈₉ -->
+
+</body>
+
+</html>
