@@ -12,73 +12,73 @@ var R = {
 	// R из Дано
 
 	R1: {
-		R: 1,
-		U: null,
-		I: null,
-	},
-
-	R2: {
-		R: 2,
-		U: null,
-		I: null,
-	},
-
-	R3: {
-		R: 3,
-		U: null,
-		I: null,
-	},
-
-	R4: {
-		R: 4,
-		U: null,
-		I: null,
-	},
-
-	R5: {
-		R: 5,
-		U: null,
-		I: null,
-	},
-
-	R6: {
-		R: 6,
-		U: null,
-		I: null,
-	},
-
-	R7: {
-		R: 7,
-		U: null,
-		I: null,
-	},
-
-	R8: {
-		R: 8,
-		U: null,
-		I: null,
-	},
-
-	R9: {
-		R: 9,
-		U: null,
-		I: null,
-	},
-
-	R10: {
 		R: 10,
 		U: null,
 		I: null,
 	},
 
+	R2: {
+		R: 20,
+		U: null,
+		I: null,
+	},
+
+	R3: {
+		R: 30,
+		U: null,
+		I: null,
+	},
+
+	R4: {
+		R: 40,
+		U: null,
+		I: null,
+	},
+
+	R5: {
+		R: 50,
+		U: null,
+		I: null,
+	},
+
+	R6: {
+		R: 60,
+		U: null,
+		I: null,
+	},
+
+	R7: {
+		R: 70,
+		U: null,
+		I: null,
+	},
+
+	R8: {
+		R: 80,
+		U: null,
+		I: null,
+	},
+
+	R9: {
+		R: 90,
+		U: null,
+		I: null,
+	},
+
+	R10: {
+		R: 100,
+		U: null,
+		I: null,
+	},
+
 	R11: {
-		R: 11,
+		R: 110,
 		U: null,
 		I: null,
 	},
 
 	R12: {
-		R: 12,
+		R: 120,
 		U: null,
 		I: null,
 	},
@@ -187,73 +187,73 @@ function refreshRObject() {
 		// R из Дано
 	
 		R1: {
-			R: 1,
-			U: null,
-			I: null,
-		},
-	
-		R2: {
-			R: 2,
-			U: null,
-			I: null,
-		},
-	
-		R3: {
-			R: 3,
-			U: null,
-			I: null,
-		},
-	
-		R4: {
-			R: 4,
-			U: null,
-			I: null,
-		},
-	
-		R5: {
-			R: 5,
-			U: null,
-			I: null,
-		},
-	
-		R6: {
-			R: 6,
-			U: null,
-			I: null,
-		},
-	
-		R7: {
-			R: 7,
-			U: null,
-			I: null,
-		},
-	
-		R8: {
-			R: 8,
-			U: null,
-			I: null,
-		},
-	
-		R9: {
-			R: 9,
-			U: null,
-			I: null,
-		},
-	
-		R10: {
 			R: 10,
 			U: null,
 			I: null,
 		},
 	
+		R2: {
+			R: 20,
+			U: null,
+			I: null,
+		},
+	
+		R3: {
+			R: 30,
+			U: null,
+			I: null,
+		},
+	
+		R4: {
+			R: 40,
+			U: null,
+			I: null,
+		},
+	
+		R5: {
+			R: 50,
+			U: null,
+			I: null,
+		},
+	
+		R6: {
+			R: 60,
+			U: null,
+			I: null,
+		},
+	
+		R7: {
+			R: 70,
+			U: null,
+			I: null,
+		},
+	
+		R8: {
+			R: 80,
+			U: null,
+			I: null,
+		},
+	
+		R9: {
+			R: 90,
+			U: null,
+			I: null,
+		},
+	
+		R10: {
+			R: 100,
+			U: null,
+			I: null,
+		},
+	
 		R11: {
-			R: 11,
+			R: 110,
 			U: null,
 			I: null,
 		},
 	
 		R12: {
-			R: 12,
+			R: 120,
 			U: null,
 			I: null,
 		},
@@ -606,14 +606,14 @@ function step2() {
 
 	for (let i = 0; i < 12;) {
 		let tmp = +document.getElementById(`R${i + 1}ininputrr`).value;
-		tmp = tmp == '' ? i + 1 : tmp;
+		tmp = tmp == '' ? 10 * (i + 1) : tmp;
 
 		R[`R${i + 1}`]['R'] = tmp;
 
 		i++;
 	}
 
-	document.getElementById(`r0U_or_I`).value == '0' ? R['R0']['U'] = (document.getElementById(`r0UIininputrr`).value == '' ? 5 : +document.getElementById(`r0UIininputrr`).value) : R['R0']['I'] = (document.getElementById(`r0UIininputrr`).value == '' ? 5 : +document.getElementById(`r0UIininputrr`).value);
+	document.getElementById(`r0U_or_I`).value == '0' ? R['R0']['U'] = (document.getElementById(`r0UIininputrr`).value == '' ? 36 : +document.getElementById(`r0UIininputrr`).value) : R['R0']['I'] = (document.getElementById(`r0UIininputrr`).value == '' ? 36 : +document.getElementById(`r0UIininputrr`).value);
 	document.getElementById('inputRR').style.display = (`none`);
 
 	for (let i = 0; i < 10;) {
