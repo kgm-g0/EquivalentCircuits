@@ -1165,7 +1165,7 @@ const reshenieRefresh = () => {
 
 			if (!checkAllRFromArray(r)) res = checkOut(1 / promRes);
 
-			if (!checkAllRFromArray(r) && r.length != 2) {
+			if (!checkAllRFromArray(r) /*&& r.length != 2*/) {
 				// textTuda = '1/(' + textTuda + ')';
 				// textTuda = createFrac(1, textTuda);
 				// textTuda2 = '1/(' + textTuda2 + ')';
@@ -1181,9 +1181,9 @@ const reshenieRefresh = () => {
 				textOfResh = `${textOfResh}${fractionR_} = ${textTuda} = ${textTuda2} =
 				${createFrac(textForTuda[0], textForTuda[1])} =>
 				${R_}R = ${createFrac(textForTuda[1], textForTuda[0])}`;
-			} else if (!checkAllRFromArray(r) && r.length == 2) {
+			} /*else if (!checkAllRFromArray(r) && r.length == 2) {
 				textOfResh = `${textOfResh}${R_}R = ${textTuda} = ${textTuda2} = ${textForTuda}`;
-			} else {
+			} */else {
 				textOfResh = `${textOfResh}${R_}R = ${textTuda} = ${textTuda2}`;
 			};
 
