@@ -1126,7 +1126,7 @@ const reshenieRefresh = () => {
 
 						break;
 					};
-				} else if (r.length == 2) {
+				} /*else if (r.length == 2) {
 					if (j == 0) {
 						// textTuda = `()/()`;
 						textTuda = createFrac(`${r[0]}R${r[1]}R`, `${r[0]}R + ${r[1]}R`);
@@ -1143,7 +1143,7 @@ const reshenieRefresh = () => {
 						// textForTuda = `${}/${}`;
 						textForTuda = createFrac(t3, t4);
 					};
-				} else {
+				} */else {
 					let frac = createFrac(1, `${i}R`);
 					if (j > 0) {
 						// textTuda = textTuda + ` + 1/${i}R`;
